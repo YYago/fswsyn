@@ -1,0 +1,26 @@
+{
+  "name": "@yyago/node-modules-custom",
+  "version": "1.0.0",
+  "description": "node module 自定义使用。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YYago/fswsyn.git"
+  },
+  "keywords": [
+    "fs",
+    "writeFileSync"
+  ],
+  "author": "877675862@qq.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/YYago/fswsyn/issues"
+  },
+  "homepage": "https://github.com/YYago/fswsyn#readme",
+  "engines" : { 
+    "node" : ">=5.0.0"
+  }
+}
