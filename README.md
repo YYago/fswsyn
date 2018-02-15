@@ -2,7 +2,7 @@
 
 Node.js 内置模块自定义改装。
 
-**下载使用须知**: 这个npm package 似乎没有什么普遍适用性，一般自用，如果使用到你自己的项目中，请自己审查代码是否适合，避免造成的损失！！！
+**下载使用须知:**  这个npm package 似乎没有什么普遍适用性，开发者自用(穷，买不起私有服务)，如果使用到你自己的项目中，请自己审查代码是否适合，避免造成的损失(因为目的在避免触发错误callback导致运行中断，所以可能会对BUG检查、性能等方面带来影响)！！！
 
 ## APIs
 
@@ -15,14 +15,19 @@ Node.js 内置模块自定义改装。
  *  `isReplaceAndCover`: 类型：Boolean;  对于已经存在的文件如何处理，`true`：将会进行处理（怎么处理请参考 `fs.writeFileSync()`的`options:{}`进行）。`false`：则忽略，什么都不做。
  * `options`：arguments[3]  默认值 `{encoding: "utf8", flag: "w" }`
 
+### 2、 .fs_mkdirSync ( pathString )
 
- ## 使用方法
+`fs.mkdirSync()` 的改进，尽可能避免触发 ‘文件夹已经存在’ 的callback。
+
+* `pathString`: 文件夹路径。
+
+## 使用方法
 
 Install:
 
-```
-npm install --save node-modules-custom
-```
+ ```
+ npm install --save node-modules-custom
+ ```
 
 Require:
  ```JavaScript
