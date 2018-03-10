@@ -101,12 +101,14 @@ function cs_fs_wf(filePathString, datas) {
  * 2. 如果不是长路径还是不要使用这个函数，开发者没有考虑：./x.x 和 x.x 的情况(太懒，不想测试)，不知道能不能创建成功。 
  */
 function fs_wfSync(filePath, data, isReplaceAndCover) {
-    let options = arguments[3] || { encoding: "utf8", flag: "w" }; // 用于fs.writeFileSync()的options
+    let options = arguments[3] || {encoding:'utf-8',flag:'w',mode:'0o666'}; // 用于fs.writeFileSync()的options
     // 判断 filePath 是否已经存在。
     if (fs.existsSync(filePath) == false) {
-        cs_fs_wfSync(filePath, data, options);
-    } else if (fs.existsSync() && isReplaceAndCover == true) {
-        fs.writeFileSync(filePath, data, options);
+        cs_fs_wfSync(filePath, data, {encoding:options.encoding,flag:options.flag,mode:options.mode});
+        console.log(`${filePath} 创建成功！`)
+    } else if (fs.existsSync(filePath) && isReplaceAndCover == true) {
+        fs.writeFileSync(filePath, data, {encoding:options.encoding,flag:options.flag,mode:options.mode});
+        console.log(`${filePath} 创建成功！`)
     } else if (fs.existsSync(filePath) && isReplaceAndCover == false) {
         // 什么都不做
         console.log(filePath + '已经存在并忽略.It has already existed and skipped.');
