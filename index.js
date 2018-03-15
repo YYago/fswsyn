@@ -108,10 +108,10 @@ function fs_wfSync(filePath, data, isReplaceAndCover) {
     // 判断 filePath 是否已经存在。
     if (fs.existsSync(filePath) == false) {
         cs_fs_wfSync(filePath, data, options);
-        console.log(`${filePath}    创建成功！`)
+        //console.log(`${filePath}    创建成功！`)
     } else if (fs.existsSync(filePath) && isReplaceAndCover == true) {
         fs.writeFileSync(filePath, data, options);
-        console.log(`${filePath}    创建成功！`)
+        //console.log(`${filePath}    创建成功！`)
     } else if (fs.existsSync(filePath) && isReplaceAndCover == false) {
         // 什么都不做
         console.log(filePath + '    已经存在并忽略.It has already existed and skipped.');
@@ -190,7 +190,7 @@ function fs_mkdirSync(pathString) {
                 }
             }
             fs.mkdirSync(pathString);
-            console.log(pathString+'    ok');
+            //console.log(pathString+'    ok');
         }
     }else{
         console.log(pathString+"    文件夹已经存在，什么都没做。The folders already exist and nothing to do.")

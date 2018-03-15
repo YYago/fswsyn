@@ -1,6 +1,6 @@
 {
   "name": "node-modules-custom",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Node.js 内置模块：fs.writeFile、fs.writeFileSync、fs.mkdirSync自定义改造。",
   "main": "index.js",
   "scripts": {
