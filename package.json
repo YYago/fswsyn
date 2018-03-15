@@ -1,7 +1,7 @@
 {
   "name": "node-modules-custom",
-  "version": "1.0.3",
-  "description": "node module 自定义使用。",
+  "version": "1.0.4",
+  "description": "Node.js 内置模块：fs.writeFile、fs.writeFileSync、fs.mkdirSync自定义改造。",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
