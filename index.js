@@ -197,10 +197,96 @@ function fs_mkdirSync(pathString) {
     }
 
 }
-
+/**
+ * write a file with long path.
+ * 
+ * @param {*} filepath file path
+ * @param {string} contents content
+ * @param {object} param2 options default:{flag:'w',encoding:'utf8'}
+ * 
+ * WARRING: 
+ * 
+ *  不要在路径中使用单个“\\”符号作为路径分隔符，不管是Windows_NT系统还是Unix系统，它带来的问题目前无解。正则表达式：'/\\\\/g'无法匹配"\\",我也无能为力。
+ *  
+ *  其实，这个问题貌似只出现Windows系统，在Unix系统中写代码的时候输入单个"\\"就已经发生了变化(用于转义)，而不像在Windows中允许其作为一个有意义的字符存在。
+ */
+function writeFileSyncLong(filepath, contents) {
+    const options = arguments[2] || { flag: 'w', encoding: 'utf8' };
+    let lastPath;
+    const pathNormal = path.normalize(filepath);
+    if (path.isAbsolute(pathNormal)) {
+        lastPath = pathNormal;
+    } else {
+        lastPath = path.resolve(pathNormal);
+    }
+    if (fs.existsSync(lastPath)) {
+        fs.writeFileSync(lastPath, contents, options);
+    } else {
+        let prefixPath = [];
+        let dir = path.dirname(lastPath);
+        let splitPath = dir.split(path.sep)
+        if (splitPath[0] == "") {
+            splitPath.splice(0, 1, "/");// 将Unix 下的产生的root[""]替换为["/"];
+        }
+        for (let i = 0; i < splitPath.length; i++) {
+            prefixPath.push(splitPath[i]);
+            let prefixPaths = prefixPath.join("/");
+            if (fs.existsSync(prefixPaths) == false) {
+                fs.mkdirSync(prefixPaths);
+            }
+        }
+        fs.writeFileSync(lastPath, contents, options);
+    }
+}
+/**
+ * write a file with long path.
+ * 
+ * @param {*} filepath file path
+ * @param {string} contents content
+ * @param {boolaen} ctrs 'true' or 'false'.
+ * @param {object} param3 options Default:{flag:'w',encoding:'utf8'}
+ * 
+ *  WARRING: 
+ * 
+ *  不要在路径中使用单个“\\”符号作为路径分隔符，不管是Windows_NT系统还是Unix系统，它带来的问题目前无解。正则表达式：'/\\\\/g'无法匹配"\\",我也无能为力。
+ *  
+ *  其实，这个问题貌似只出现Windows系统，在Unix系统中写代码的时候输入单个"\\"就已经发生了变化(用于转义)，而不像在Windows中，允许其作为一个有意义的字符存在。
+ */
+function writeFileSyncLongBatch(filepath, contents, ctrs) {
+    const options = arguments[3] || { flag: 'w', encoding: 'utf8' };
+    let lastPath;
+    const pathNormal = path.normalize(filepath);
+    if (path.isAbsolute(pathNormal)) {
+        lastPath = pathNormal;
+    } else {
+        lastPath = path.resolve(pathNormal);
+    }
+    if (fs.existsSync(lastPath) && ctrs == true) {
+        fs.writeFileSync(lastPath, contents, options);
+    } else if (fs.existsSync(lastPath) && ctrs == false) {
+        // nothing
+    } else {
+        let prefixPath = [];
+        let dir = path.dirname(lastPath);
+        let splitPath = dir.split(path.sep)
+        if (splitPath[0] == "") {
+            splitPath.splice(0, 1, "/");// 将Unix 下的产生的root[""]替换为["/"];
+        }
+        for (let i = 0; i < splitPath.length; i++) {
+            prefixPath.push(splitPath[i]);
+            let prefixPaths = prefixPath.join("/");
+            if (fs.existsSync(prefixPaths) == false) {
+                fs.mkdirSync(prefixPaths);
+            }
+        }
+        fs.writeFileSync(lastPath, contents, options);
+    }
+}
 module.exports = {
     fs_wfSync,
     fs_wf,
     fs_mkdirSync,
+    writeFileSyncLong,
+    writeFileSyncLongBatch
 }
 
